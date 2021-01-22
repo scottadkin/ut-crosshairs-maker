@@ -117,17 +117,19 @@ class Crosshair{
 
         c.fillStyle = "white";
 
+        const offsetX = parseInt(_offsetX.value);
+        const offsetY = parseInt(_offsetY.value);
         //x
-        c.fillRect(32 - this.width - this.centerGap, 32 - Math.floor(this.thickness.x * 0.5), this.width, this.thickness.x);
+        c.fillRect(32 - this.width - this.centerGap + offsetX, 32 - Math.floor(this.thickness.x * 0.5) + offsetY, this.width, this.thickness.x);
         //c.fillStyle = "red";
-        c.fillRect(32 + this.centerGap, 32 - Math.floor(this.thickness.x * 0.5), this.width, this.thickness.x);
+        c.fillRect(33 + this.centerGap + offsetX, 32 - Math.floor(this.thickness.x * 0.5) + offsetY, this.width, this.thickness.x);
 
         
         //y
         c.fillStyle = "white";
-        c.fillRect(32 - Math.floor(this.thickness.y * 0.5), 32 - this.height - this.centerGap, this.thickness.y, this.height);
+        c.fillRect(32 - Math.floor(this.thickness.y * 0.5) + offsetX, 32 - this.height - this.centerGap + offsetY, this.thickness.y, this.height);
        // c.fillStyle = "red";
-        c.fillRect(32 - Math.floor(this.thickness.y * 0.5), 32 + this.centerGap , this.thickness.y, this.height);
+        c.fillRect(32 - Math.floor(this.thickness.y * 0.5) + offsetX, 33 + this.centerGap + offsetY , this.thickness.y, this.height);
 
 
     }

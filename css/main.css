@@ -10,6 +10,10 @@ body{
     background-color:rgb(240,240,240);
 }
 
+#wrapper{
+    text-align:center;
+    margin-top:25px;
+}
 
 .download{
     display:inline-block;
