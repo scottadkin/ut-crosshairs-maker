@@ -83,3 +83,13 @@ label{
     width:200px;
     display:inline-block;
 }
+
+.form-row-alt{
+    margin-left:auto;
+    margin-right:auto;
+    width:400px;
+}
+
+.form-row-alt label{
+    width:50px;
+}

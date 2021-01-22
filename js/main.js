@@ -13,12 +13,14 @@ const _offsetY = document.getElementById("offset-y");
 let _crosshairs = [];
 
 
-const _currentDownloaded = [];
+let _currentDownloaded = [];
 
 
 const updateIni = () =>{
 
     let string = ``;
+
+    _ini.innerHTML = '';
 
     for(let i = 0; i < _currentDownloaded.length; i++){
 
@@ -45,9 +47,10 @@ for(let i = 0; i < eventElems.length; i++){
     eventElems[i].addEventListener("change", () =>{
 
         _parent.innerHTML = '';
-        updateIni();
-
+        
+        _currentDownloaded = [];
         new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value);
+        updateIni();
        // for(let i = 0; i < 32; i++){
 
           //  new Crosshair(i + 1, i + 1, 1, 1, 0, i);
@@ -95,7 +98,11 @@ class Crosshair{
 
         this.url.addEventListener("click", () =>{
 
-            _currentDownloaded.push(`x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}`);
+            const currentName = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${_offsetX.value}_${_offsetY.value}`;
+
+            if(_currentDownloaded.indexOf(currentName) === -1){
+                _currentDownloaded.push(currentName);
+            }
 
             updateIni();
         });
@@ -136,9 +143,17 @@ class Crosshair{
 
 }
 
-
-//new Crosshair(10,10,1,1,0);
+new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value);
 //new Crosshair(10,10,2,2,0);
 //new Crosshair(10,10,4,4,0);
 //new Crosshair(10,10,8,8,0);
 
+const test = document.getElementsByName("maker-type");
+
+for(let i = 0; i < test.length; i++){
+
+    test[i].addEventListener("click", () =>{
+
+        console.log(test[i].value);
+    });
+}
