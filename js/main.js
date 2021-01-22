@@ -47,25 +47,27 @@ for(let i = 0; i < eventElems.length; i++){
         _parent.innerHTML = '';
         updateIni();
 
-        for(let i = 0; i < 32; i++){
+        new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value);
+       // for(let i = 0; i < 32; i++){
 
-            new Crosshair(i + 1, i + 1, 1, 1, 0, i);
-        }
+          //  new Crosshair(i + 1, i + 1, 1, 1, 0, i);
+       // }
     });
 }
 
 
 class Crosshair{
 
-    constructor(width, height, thicknessX, thicknessY, centerGap, id){
+    constructor(width, height, thicknessX, thicknessY, centerGap){
 
+        console.log(arguments);
         this.packName = "xhairtests";
 
-        this.width = width;
-        this.height = height;
-        this.thickness = {"x": thicknessX, "y": thicknessY};
+        this.width = parseInt(width);
+        this.height = parseInt(height);
+        this.thickness = {"x": parseInt(thicknessX), "y": parseInt(thicknessY)};
 
-        this.centerGap = centerGap;
+        this.centerGap = parseInt(centerGap);
 
         this.wrapper = document.createElement("div");
         this.wrapper.className = "download";
