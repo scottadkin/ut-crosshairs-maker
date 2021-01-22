@@ -1,8 +1,59 @@
 const _parent = document.getElementById("wrapper");
 const _ini = document.getElementById("ini");
+const _package = document.getElementById("package-name");
+const _width = document.getElementById("width");
+const _height = document.getElementById("height");
+const _thicknessX = document.getElementById("thickness-x");
+const _thicknessY = document.getElementById("thickness-y");
+const _centerGap = document.getElementById("center-gap");
+const _offsetX = document.getElementById("offset-x");
+const _offsetY = document.getElementById("offset-y");
+
+
+let _crosshairs = [];
 
 
 const _currentDownloaded = [];
+
+
+const updateIni = () =>{
+
+    let string = ``;
+
+    for(let i = 0; i < _currentDownloaded.length; i++){
+
+        string += `CrossHairs[${i}]=${_package.value}.${_currentDownloaded[i]}\n`;
+    }
+
+    _ini.innerHTML = string;
+
+}
+
+const eventElems = [
+    _package,
+    _width,
+    _height,
+    _thicknessX,
+    _thicknessY,
+    _centerGap,
+    _offsetX,
+    _offsetY
+];
+
+for(let i = 0; i < eventElems.length; i++){
+
+    eventElems[i].addEventListener("change", () =>{
+
+        _parent.innerHTML = '';
+        updateIni();
+
+        for(let i = 0; i < 32; i++){
+
+            new Crosshair(i + 1, i + 1, 1, 1, 0, i);
+        }
+    });
+}
+
 
 class Crosshair{
 
@@ -42,17 +93,9 @@ class Crosshair{
 
         this.url.addEventListener("click", () =>{
 
-            _currentDownloaded.push(`${this.packName}.x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}`);
+            _currentDownloaded.push(`x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}`);
 
-            let string = ``;
-
-            for(let i = 0; i < _currentDownloaded.length; i++){
-
-                string += `CrossHairs[${i}]=${_currentDownloaded[i]}<br/>`;
-            }
-            
-            console.log(string);
-            _ini.innerHTML = string;
+            updateIni();
         });
 
         const image = this.canvas.toDataURL("image/png");
@@ -94,7 +137,3 @@ class Crosshair{
 //new Crosshair(10,10,4,4,0);
 //new Crosshair(10,10,8,8,0);
 
-for(let i = 0; i < 32; i++){
-
-    new Crosshair(i + 1, i + 1, 1, 1, 0, i);
-}

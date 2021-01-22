@@ -1,27 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+
 *{
     margin:0;
     padding:0;
-    font-family:arial;
+    font-family: 'Open Sans', sans-serif;
 }
 
 body{
-    background-color:rgb(200,200,200);
+    background-color:rgb(240,240,240);
 }
 
 
 .download{
     display:inline-block;
-    background-color:lightskyblue;
-    border:1px solid rgb(255,255,255);
-    width:64px;
+    background-color:white;
+    border:1px solid rgba(0,0,0,0.25);
+    box-shadow:1px 1px 1px 1px rgba(0,0,0,0.5);
+    margin-left:-1px;
+    margin-top:-1px;
 }
 
 canvas{
     display:block;
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:10px;
 }
 
 
 .download a{
     padding:5px;
-    font-size:12px;
+    font-size:16px;
+    color:blue;
+    text-decoration: none;
+}
+
+
+h1{
+    text-align:center;
+    font-weight:400;
+    font-size:20px;
+    padding:15px;
+}
+
+h2{
+    font-weight:400;
+    text-align:center;
+    font-size:16px;
+    margin-top:25px;
+}
+
+#wrapper{
+    width:80%;
+ 
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#ini{
+    display:block;
+    max-width:50%;
+    min-width:50%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:25px;
+    min-height:500px;
+    padding:5px;
+    font-size:14px;
+    line-height:22px;
+}
+
+.form-row{
+    margin-left:auto;
+    margin-right:auto;
+    width:400px;
+}
+label{
+    width:200px;
+    display:inline-block;
 }
