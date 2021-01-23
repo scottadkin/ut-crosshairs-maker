@@ -40,6 +40,62 @@ const updateIni = () =>{
 
 }
 
+const updateMinMax = (min, max) =>{
+
+
+    if(parseInt(min.value) > parseInt(max.value)){
+        max.value = parseInt(min.value);
+        min.value = parseInt(max.value);
+    }   
+}
+
+const createCrosshairs = () =>{
+
+    const minWidth = parseInt(_width.value);
+    const maxWidth = parseInt(_widthMax.value);
+
+    const minHeight = parseInt(_height.value);
+    const maxHeight = parseInt(_heightMax.value);
+
+    const minThicknessX = parseInt(_thicknessX.value);
+    const maxThicknessX = parseInt(_thicknessXMax.value);
+
+    const minThicknessY = parseInt(_thicknessY.value);
+    const maxThicknessY = parseInt(_thicknessYMax.value);
+
+    const minCenterGap = parseInt(_centerGap.value);
+    const maxCenterGap = parseInt(_centerGapMax.value);
+
+    const minOffsetX = parseInt(_offsetX.value);
+    const maxOffsetX = parseInt(_offsetXMax.value);
+
+    const minOffsetY = parseInt(_offsetY.value);
+    const maxOffsetY = parseInt(_offsetYMax.value);
+
+    for(let width = minWidth; width <= maxWidth; width++){
+   
+        for(let height = minHeight; height <= maxHeight; height++){  
+
+            for(let thicknessX = minThicknessX; thicknessX <= maxThicknessX; thicknessX++){
+
+                for(let thicknessY = minThicknessY; thicknessY <= maxThicknessY; thicknessY++){
+
+                    for(let centerGap = minCenterGap; centerGap <= maxCenterGap; centerGap++){
+
+                        for(let offsetX = minOffsetX; offsetX <= maxOffsetX; offsetX++){
+
+                            for(let offsetY = minOffsetY; offsetY <= maxOffsetY; offsetY++){
+
+                                new Crosshair(width, height, thicknessX, thicknessY, centerGap, offsetX, offsetY);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 const eventElems = [
     _package,
     _width,
@@ -48,18 +104,52 @@ const eventElems = [
     _thicknessY,
     _centerGap,
     _offsetX,
-    _offsetY
+    _offsetY,
+    _widthMax,
+    _heightMax, 
+    _thicknessXMax,
+    _thicknessYMax,
+    _centerGapMax,
+    _offsetXMax,
+    _offsetYMax,
 ];
 
 for(let i = 0; i < eventElems.length; i++){
 
     eventElems[i].addEventListener("change", () =>{
 
+        
+
+        console.log(eventElems[i].name);
+
+        if(eventElems[i].name === "width" || eventElems[i].name === 'width-max'){
+            updateMinMax(_width, _widthMax);
+        }else if(eventElems[i].name === "height" || eventElems[i].name === 'height-max'){
+            updateMinMax(_height, _heightMax);
+        }if(eventElems[i].name === "thickness-x" || eventElems[i].name === 'thickness-x-max'){
+            updateMinMax(_thicknessX, _thicknessXMax);
+        }if(eventElems[i].name === "thickness-y" || eventElems[i].name === 'thickness-y-max'){
+            updateMinMax(_thicknessY, _thicknessYMax);
+        }if(eventElems[i].name === "center-gap" || eventElems[i].name === 'center-gap-max'){
+            updateMinMax(_centerGap, _centerGapMax);
+        }if(eventElems[i].name === "offset-x" || eventElems[i].name === 'offset-x-max'){
+            updateMinMax(_offsetX, _offsetXMax);
+        }if(eventElems[i].name === "offset-y" || eventElems[i].name === 'offset-y-max'){
+            updateMinMax(_offsetY, _offsetYMax);
+        }
+
         _parent.innerHTML = '';
         
         _currentDownloaded = [];
-        new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value);
-        updateIni();
+        if(_currentMode === 'single'){
+            new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value, _offsetX.value, _offsetY.value);
+            updateIni();
+        }else{
+
+
+            createCrosshairs();
+            updateIni();
+        }
        // for(let i = 0; i < 32; i++){
 
           //  new Crosshair(i + 1, i + 1, 1, 1, 0, i);
@@ -100,6 +190,14 @@ for(let i = 0; i < test.length; i++){
 
         console.log(test[i].value);
 
+        _widthMax.value = _width.value,
+        _heightMax.value = _height.value; 
+        _thicknessXMax.value = _thicknessX.value;
+        _thicknessYMax.value = _thicknessY.value;
+        _centerGapMax.value = _centerGap.value;
+        _offsetXMax.value = _offsetX.value;
+        _offsetYMax.value = _offsetY.value;
+
         if(test[i].value === "single"){
             _currentMode = "single";
             hideMultiMode();
@@ -113,9 +211,8 @@ for(let i = 0; i < test.length; i++){
 
 class Crosshair{
 
-    constructor(width, height, thicknessX, thicknessY, centerGap){
-
-        console.log(arguments);
+    constructor(width, height, thicknessX, thicknessY, centerGap, offsetX, offsetY){
+        
         this.packName = "xhairtests";
 
         this.width = parseInt(width);
@@ -124,13 +221,15 @@ class Crosshair{
 
         this.centerGap = parseInt(centerGap);
 
+        this.offset = {"x": parseInt(offsetX), "y": parseInt(offsetY)};
+
         this.wrapper = document.createElement("div");
         this.wrapper.className = "download";
 
         
 
         this.canvas = document.createElement("canvas");
-        this.canvas.id = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}`;
+        this.canvas.id = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`;
         this.canvas.width = 64;
         this.canvas.height = 64;
 
@@ -150,7 +249,7 @@ class Crosshair{
 
         this.url.addEventListener("click", () =>{
 
-            const currentName = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${_offsetX.value}_${_offsetY.value}`;
+            const currentName = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`;
 
             if(_currentDownloaded.indexOf(currentName) === -1){
                 _currentDownloaded.push(currentName);
@@ -163,7 +262,6 @@ class Crosshair{
 
         this.url.href = image;
           
-    
     }
 
 
@@ -176,8 +274,8 @@ class Crosshair{
 
         c.fillStyle = "white";
 
-        const offsetX = parseInt(_offsetX.value);
-        const offsetY = parseInt(_offsetY.value);
+        const offsetX = this.offset.x;
+        const offsetY = this.offset.y;
         //x
         c.fillRect(32 - this.width - this.centerGap + offsetX, 32 - Math.floor(this.thickness.x * 0.5) + offsetY, this.width, this.thickness.x);
         //c.fillStyle = "red";
@@ -195,5 +293,5 @@ class Crosshair{
 
 }
 
-new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value);
+new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value, _offsetX.value, _offsetY.value);
 
