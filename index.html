@@ -24,13 +24,17 @@
                 <input type="text" name="package-name" id="package-name" value="MyCrosshairpack">
             </div>
             <div class="form-row">
-                <label for="width">Width</label>
+                <label from="lock-width">Lock Width &amp; Height</label>
+                <input type="checkbox" id="lock-width" name="lock-width" checked>
+            </div>
+            <div class="form-row">
+                <label for="width" id="height-row-label">Width &amp; Height</label>
                 <span class="m-mode">Start</span>
                 <input type="number" name="width" id="width" value="5" min="0" max="32">
                 <span class="m-mode">End</span>
                 <input class="m-mode" type="number" name="width-max" id="width-max" value="5" min="0" max="32">
             </div>
-            <div class="form-row">
+            <div class="form-row" id="height-row" style="display:none;">
                 <label for="height">Height</label>
                 <span class="m-mode">Start</span>
                 <input type="number" name="height" id="height" value="5" min="0" max="32">

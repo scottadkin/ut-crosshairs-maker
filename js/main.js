@@ -17,6 +17,10 @@ const _centerGapMax = document.getElementById("center-gap-max");
 const _offsetXMax = document.getElementById("offset-x-max");
 const _offsetYMax = document.getElementById("offset-y-max");
 
+const _lockWidthHeight = document.getElementById("lock-width");
+const _heightRow = document.getElementById("height-row");
+const _heightRowLabel = document.getElementById("height-row-label");
+
 
 let _crosshairs = [];
 
@@ -86,7 +90,7 @@ const createCrosshairs = () =>{
 
                             for(let offsetY = minOffsetY; offsetY <= maxOffsetY; offsetY++){
 
-                                new Crosshair(width, height, thicknessX, thicknessY, centerGap, offsetX, offsetY);
+                                new Crosshair(width, (!_lockWidthHeight.checked) ? height: width, thicknessX, thicknessY, centerGap, offsetX, offsetY);
                             }
                         }
                     }
@@ -111,7 +115,7 @@ const eventElems = [
     _thicknessYMax,
     _centerGapMax,
     _offsetXMax,
-    _offsetYMax,
+    _offsetYMax
 ];
 
 for(let i = 0; i < eventElems.length; i++){
@@ -142,7 +146,7 @@ for(let i = 0; i < eventElems.length; i++){
         
         _currentDownloaded = [];
         if(_currentMode === 'single'){
-            new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value, _offsetX.value, _offsetY.value);
+            new Crosshair(_width.value, (!_lockWidthHeight.checked) ? _height.value: _width.value, _thicknessX.value, _thicknessY.value, _centerGap.value, _offsetX.value, _offsetY.value);
             updateIni();
         }else{
 
@@ -188,9 +192,7 @@ for(let i = 0; i < test.length; i++){
 
     test[i].addEventListener("click", () =>{
 
-        console.log(test[i].value);
-
-        _widthMax.value = _width.value,
+        _widthMax.value = _width.value;
         _heightMax.value = _height.value; 
         _thicknessXMax.value = _thicknessX.value;
         _thicknessYMax.value = _thicknessY.value;
@@ -207,6 +209,19 @@ for(let i = 0; i < test.length; i++){
         }
     });
 }
+
+_lockWidthHeight.addEventListener("click", () =>{
+
+    console.log(_lockWidthHeight.checked);
+
+    if(_lockWidthHeight.checked){
+        _heightRow.style.cssText = "display:none";
+        _heightRowLabel.innerHTML = "Width &amp; Height";
+    }else{
+        _heightRow.style.cssText = "";
+        _heightRowLabel.innerHTML = "Width";
+    }
+});
 
 
 class Crosshair{
@@ -233,7 +248,11 @@ class Crosshair{
         this.canvas.width = 64;
         this.canvas.height = 64;
 
-
+        this.info = document.createElement("div");
+        this.info.className = "info";
+        this.info.innerHTML = `Width=${this.width}<br/>Height=${this.height}<br/>
+        ThicknessX=${this.thickness.x}<br/>ThicknessY=${this.thickness.y}<br/>CenterGap=${this.centerGap}<br/>OffsetX=${this.offset.x}<br/>OffsetY=${this.offset.y}`;
+        this.wrapper.appendChild(this.info);
         this.wrapper.appendChild(this.canvas);
         this.render();
 
@@ -242,8 +261,10 @@ class Crosshair{
         this.url.herf = "#";
 
     
-        this.url.innerHTML = "Download";
+        this.url.innerHTML = "Download";//`${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`
         this.wrapper.appendChild(this.url);
+        this.wrapper.appendChild(this.info);
+        //this.wrapper.innerHTML += `${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`;
 
         _parent.appendChild(this.wrapper);
 
