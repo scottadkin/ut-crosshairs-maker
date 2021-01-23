@@ -21,6 +21,10 @@ const _lockWidthHeight = document.getElementById("lock-width");
 const _heightRow = document.getElementById("height-row");
 const _heightRowLabel = document.getElementById("height-row-label");
 
+const _lockThickness = document.getElementById("lock-thickness");
+const _thicknessRow = document.getElementById("thickness-row");
+const _thicknessLabel = document.getElementById("thickness-label");
+
 
 let _crosshairs = [];
 
@@ -90,7 +94,15 @@ const createCrosshairs = () =>{
 
                             for(let offsetY = minOffsetY; offsetY <= maxOffsetY; offsetY++){
 
-                                new Crosshair(width, (!_lockWidthHeight.checked) ? height: width, thicknessX, thicknessY, centerGap, offsetX, offsetY);
+                                new Crosshair(
+                                    width, 
+                                    (!_lockWidthHeight.checked) ? height: width, 
+                                    thicknessX, 
+                                    (!_lockThickness.checked) ? thicknessY: thicknessX,
+                                    centerGap, 
+                                    offsetX, 
+                                    offsetY
+                                );
                             }
                         }
                     }
@@ -146,7 +158,15 @@ for(let i = 0; i < eventElems.length; i++){
         
         _currentDownloaded = [];
         if(_currentMode === 'single'){
-            new Crosshair(_width.value, (!_lockWidthHeight.checked) ? _height.value: _width.value, _thicknessX.value, _thicknessY.value, _centerGap.value, _offsetX.value, _offsetY.value);
+            new Crosshair(
+                _width.value, 
+                (!_lockWidthHeight.checked) ? _height.value: _width.value, 
+                _thicknessX.value, 
+                (!_lockThickness.checked) ? _thicknessY.value : _thicknessX.value, 
+                _centerGap.value, 
+                _offsetX.value, 
+                _offsetY.value
+            );
             updateIni();
         }else{
 
@@ -223,6 +243,18 @@ _lockWidthHeight.addEventListener("click", () =>{
     }
 });
 
+_lockThickness.addEventListener("click", () =>{
+
+    console.log(_lockThickness.checked);
+
+    if(_lockThickness.checked){
+        _thicknessRow.style.cssText = "display:none";
+        _thicknessLabel.innerHTML = "Thickness X &amp; Y";
+    }else{
+        _thicknessRow.style.cssText = "";
+        _thicknessLabel.innerHTML = "Thickness X";
+    }
+});
 
 class Crosshair{
 

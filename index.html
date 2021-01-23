@@ -42,13 +42,19 @@
                 <input class="m-mode" type="number" name="height-max" id="height-max" value="5" min="0" max="32">
             </div>
             <div class="form-row">
-                <label for="thickness-x">Thickness X</label>
+                <label from="lock-thickness">
+                    Lock Thickness X &amp; Y
+                </label>
+                <input type="checkbox" name="lock-thickness" id="lock-thickness" checked>
+            </div>
+            <div class="form-row">
+                <label for="thickness-x" id="thickness-label">Thickness X &amp; Y</label>
                 <span class="m-mode">Start</span>
                 <input type="number" name="thickness-x" id="thickness-x" value="1" min="0" max="64">
                 <span class="m-mode">End</span>
                 <input class="m-mode" type="number" name="thickness-x-max" id="thickness-x-max" value="1" min="0" max="64">
             </div>
-            <div class="form-row">
+            <div class="form-row" id="thickness-row" style="display:none;">
                 <label for="thickness-y">Thickness Y</label>
                 <span class="m-mode">Start</span>
                 <input type="number" name="thickness-y" id="thickness-y" value="1" min="0" max="64">
