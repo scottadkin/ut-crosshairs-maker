@@ -9,11 +9,20 @@ const _centerGap = document.getElementById("center-gap");
 const _offsetX = document.getElementById("offset-x");
 const _offsetY = document.getElementById("offset-y");
 
+const _widthMax = document.getElementById("width-max");
+const _heightMax = document.getElementById("height-max");
+const _thicknessXMax = document.getElementById("thickness-x-max");
+const _thicknessYMax = document.getElementById("thickness-y-max");
+const _centerGapMax = document.getElementById("center-gap-max");
+const _offsetXMax = document.getElementById("offset-x-max");
+const _offsetYMax = document.getElementById("offset-y-max");
+
 
 let _crosshairs = [];
 
 
 let _currentDownloaded = [];
+let _currentMode = "single";
 
 
 const updateIni = () =>{
@@ -59,6 +68,49 @@ for(let i = 0; i < eventElems.length; i++){
 }
 
 
+const hideMultiMode = () =>{
+
+    const elems = document.getElementsByClassName("m-mode");
+
+    for(let i = 0; i < elems.length; i++){
+
+        elems[i].style.cssText = "display:none";
+    }
+}
+
+hideMultiMode();
+
+const showMultiMode = () =>{
+
+    const elems = document.getElementsByClassName("m-mode");
+
+    for(let i = 0; i < elems.length; i++){
+
+        elems[i].style.cssText = "";
+    }
+}
+
+
+
+const test = document.getElementsByName("maker-type");
+
+for(let i = 0; i < test.length; i++){
+
+    test[i].addEventListener("click", () =>{
+
+        console.log(test[i].value);
+
+        if(test[i].value === "single"){
+            _currentMode = "single";
+            hideMultiMode();
+        }else{
+            _currentMode = "multi";
+            showMultiMode();
+        }
+    });
+}
+
+
 class Crosshair{
 
     constructor(width, height, thicknessX, thicknessY, centerGap){
@@ -87,7 +139,7 @@ class Crosshair{
         this.render();
 
         this.url = document.createElement("A");
-        this.url.download = `${this.canvas.id}.png`;
+        this.url.download = `${this.canvas.id}.bmp`;
         this.url.herf = "#";
 
     
@@ -107,7 +159,7 @@ class Crosshair{
             updateIni();
         });
 
-        const image = this.canvas.toDataURL("image/png");
+        const image = this.canvas.toDataURL("image/bmp");
 
         this.url.href = image;
           
@@ -144,16 +196,4 @@ class Crosshair{
 }
 
 new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value);
-//new Crosshair(10,10,2,2,0);
-//new Crosshair(10,10,4,4,0);
-//new Crosshair(10,10,8,8,0);
 
-const test = document.getElementsByName("maker-type");
-
-for(let i = 0; i < test.length; i++){
-
-    test[i].addEventListener("click", () =>{
-
-        console.log(test[i].value);
-    });
-}
