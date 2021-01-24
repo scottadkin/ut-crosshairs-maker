@@ -22,6 +22,8 @@ body{
     box-shadow:1px 1px 1px 1px rgba(0,0,0,0.5);
     margin-left:-1px;
     margin-top:-1px;
+    width:150px;
+    padding-bottom:5px;
 }
 
 canvas{
@@ -34,7 +36,7 @@ canvas{
 
 .download a{
     padding:5px;
-    font-size:12px;
+    font-size:16px;
     color:blue;
     text-decoration: none;
 }
@@ -63,12 +65,12 @@ h2{
 
 #ini{
     display:block;
-    max-width:50%;
-    min-width:50%;
+    max-width:400px;
+    width:50%;
     margin-left:auto;
     margin-right:auto;
     margin-bottom:25px;
-    min-height:500px;
+    min-height:200px;
     padding:5px;
     font-size:14px;
     line-height:22px;
@@ -79,11 +81,17 @@ h2{
     margin-right:auto;
     width:400px;
     padding:2px;
-    font-size:14px;
+    font-size:12px;
+    border:1px solid rgba(0,0,0,0.25);
+    margin-top:-1px;
+    background-color:white;
+    line-height:20px;
 }
 label{
-    width:200px;
+    width:180px;
     display:inline-block;
+    font-size:12px;
+    
 }
 
 .form-row-alt{
@@ -96,12 +104,31 @@ label{
     width:50px;
 }
 
+.m-mode{
+    font-size:12px;
+}
 
 span{
     font-size:14px;
 }
 
 .info{
-    font-size:9px;
-    line-height:10px;
+    font-size:10px;
+    line-height:11px;
+}
+
+input[type=number]{
+    width:50px;
+}
+
+select, input[type=text]{
+    width:175px;
+}
+
+
+footer{
+    text-align:center;
+    color:rgba(0,0,0,0.5);
+    font-weight:300;
+    font-size:12px;
 }

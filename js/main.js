@@ -1,5 +1,6 @@
 const _parent = document.getElementById("wrapper");
 const _ini = document.getElementById("ini");
+const _makerModes = document.getElementsByName("maker-type");
 const _package = document.getElementById("package-name");
 const _width = document.getElementById("width");
 const _height = document.getElementById("height");
@@ -26,6 +27,7 @@ const _thicknessRow = document.getElementById("thickness-row");
 const _thicknessLabel = document.getElementById("thickness-label");
 
 const _fileType = document.getElementById("file-type");
+const _displayInfo = document.getElementById("display-info");
 
 
 let _crosshairs = [];
@@ -130,7 +132,12 @@ const eventElems = [
     _centerGapMax,
     _offsetXMax,
     _offsetYMax,
-    _fileType
+    _fileType,
+    _displayInfo,
+    _lockWidthHeight,
+    _lockThickness,
+    _makerModes[0],
+    _makerModes[1]
 ];
 
 for(let i = 0; i < eventElems.length; i++){
@@ -170,17 +177,20 @@ for(let i = 0; i < eventElems.length; i++){
                 _offsetX.value, 
                 _offsetY.value
             );
-            updateIni();
+
+            if(eventElems[i].name !== 'display-info'){
+                updateIni();
+            }
+
         }else{
-
-
             createCrosshairs();
-            updateIni();
-        }
-       // for(let i = 0; i < 32; i++){
+            if(eventElems[i].name !== 'display-info'){
+                
+                updateIni();
+            }
 
-          //  new Crosshair(i + 1, i + 1, 1, 1, 0, i);
-       // }
+        }
+
     });
 }
 
@@ -209,11 +219,11 @@ const showMultiMode = () =>{
 
 
 
-const test = document.getElementsByName("maker-type");
 
-for(let i = 0; i < test.length; i++){
 
-    test[i].addEventListener("click", () =>{
+for(let i = 0; i < _makerModes.length; i++){
+
+    _makerModes[i].addEventListener("click", () =>{
 
         _widthMax.value = _width.value;
         _heightMax.value = _height.value; 
@@ -223,7 +233,7 @@ for(let i = 0; i < test.length; i++){
         _offsetXMax.value = _offsetX.value;
         _offsetYMax.value = _offsetY.value;
 
-        if(test[i].value === "single"){
+        if(_makerModes[i].value === "single"){
             _currentMode = "single";
             hideMultiMode();
         }else{
@@ -291,8 +301,42 @@ class Crosshair{
 
         this.info = document.createElement("div");
         this.info.className = "info";
-        this.info.innerHTML = `Width=${this.width}<br/>Height=${this.height}<br/>
-        ThicknessX=${this.thickness.x}<br/>ThicknessY=${this.thickness.y}<br/>CenterGap=${this.centerGap}<br/>OffsetX=${this.offset.x}<br/>OffsetY=${this.offset.y}`;
+
+        this.info.innerHTML = ``;
+        
+        if(_displayInfo.checked){
+
+
+            this.info.innerHTML = `
+            Width = ${this.width}<br/>
+            Height = ${this.height}<br/>
+            ThicknessX = ${this.thickness.x}<br/>
+            ThicknessY = ${this.thickness.y}<br/>
+            OffsetX = ${this.offset.x}<br/>
+            OffsetY = ${this.offset.y}<br/>
+            Center Gap = ${this.centerGap}<br/>
+        `;
+            /*let infoString = ``;
+
+            if(_lockWidthHeight.checked){
+                infoString += `Width &amp; Height=<b>${this.width}</b><br/>`;
+            }else{
+                infoString += `Width=<b>${this.width}</b> Height=<b>${this.height}</b><br/>`;
+            }
+
+            if(_lockThickness.checked){
+                infoString += `ThicknessX &amp; Y=<b>${this.thickness.x}</b><br/>`;
+            }else{
+                infoString += `Thickness X=<b>${this.thickness.x}</b> Thickness Y=<b>${this.thickness.y}</b><br/>`;
+            }
+            
+            infoString += `CenterGap=<b>${this.centerGap}</b><br/>`;
+
+            infoString += `OffsetX=<b>${this.offset.x}</b> OffsetY=<b>${this.offset.y}</b>`;
+
+            this.info.innerHTML = infoString;*/
+        }
+
         this.wrapper.appendChild(this.info);
         this.wrapper.appendChild(this.canvas);
         this.render();
