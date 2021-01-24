@@ -19,6 +19,7 @@
                 Multiple:
                 <input type="radio" id="maker-multi" name="maker-type" value="multi">
             </div>
+
             <div class="form-row">
                 <label for="package-name">Package Name</label>
                 <input type="text" name="package-name" id="package-name" value="MyCrosshairpack">
@@ -81,6 +82,16 @@
                 <input type="number" name="offset-y" id="offset-y" value="0" min="-32" max="32">
                 <span class="m-mode">End</span>
                 <input class="m-mode" type="number" name="offset-y-max" id="offset-y-max" value="0" min="-32" max="32">
+            </div>
+            <div class="form-row">
+                <label for="image-type">
+                    Image Format
+                </label>
+                <select id="file-type" name="file-type">
+                    <option value="bmp" selected>BMP (Recommended)</option>
+                    <option value="png">PNG (Support added with 469)</option>
+                    <option value="jpg">JPG</option>
+                </select>
             </div>
         </div>
         <div id="wrapper">

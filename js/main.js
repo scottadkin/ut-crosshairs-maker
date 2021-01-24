@@ -25,6 +25,8 @@ const _lockThickness = document.getElementById("lock-thickness");
 const _thicknessRow = document.getElementById("thickness-row");
 const _thicknessLabel = document.getElementById("thickness-label");
 
+const _fileType = document.getElementById("file-type");
+
 
 let _crosshairs = [];
 
@@ -127,7 +129,8 @@ const eventElems = [
     _thicknessYMax,
     _centerGapMax,
     _offsetXMax,
-    _offsetYMax
+    _offsetYMax,
+    _fileType
 ];
 
 for(let i = 0; i < eventElems.length; i++){
@@ -256,6 +259,12 @@ _lockThickness.addEventListener("click", () =>{
     }
 });
 
+/*
+_fileType.addEventListener("change", () =>{
+
+    console.log(_fileType.value);
+});*/
+
 class Crosshair{
 
     constructor(width, height, thicknessX, thicknessY, centerGap, offsetX, offsetY){
@@ -289,7 +298,7 @@ class Crosshair{
         this.render();
 
         this.url = document.createElement("A");
-        this.url.download = `${this.canvas.id}.bmp`;
+        this.url.download = `${this.canvas.id}.${_fileType.value}`;
         this.url.herf = "#";
 
     
@@ -311,7 +320,7 @@ class Crosshair{
             updateIni();
         });
 
-        const image = this.canvas.toDataURL("image/bmp");
+        const image = this.canvas.toDataURL(`image/${_fileType.value}`);
 
         this.url.href = image;
           
