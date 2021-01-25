@@ -37,7 +37,7 @@ canvas{
 .download a{
     padding:5px;
     font-size:16px;
-    color:blue;
+    color:rgb(120,120,120);
     text-decoration: none;
 }
 
@@ -46,14 +46,17 @@ h1{
     text-align:center;
     font-weight:400;
     font-size:20px;
-    padding:15px;
+    padding:10px;
+    color:rgba(0,0,0,0.5);
 }
 
-h2{
+h2, h3{
     font-weight:400;
     text-align:center;
-    font-size:16px;
+    font-size:18px;
     margin-top:25px;
+    color:rgba(0,0,0,0.5);
+    padding:10px;
 }
 
 #wrapper{
@@ -125,7 +128,25 @@ select, input[type=text]{
     width:175px;
 }
 
+#tutorial{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:14px;
+}
 
+#tutorial img{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    border:1px solid rgb(100,100,100);
+    margin-top:14px;
+    margin-bottom:14px;
+}
+
+li{
+    padding:7px;
+}
 footer{
     text-align:center;
     color:rgba(0,0,0,0.5);

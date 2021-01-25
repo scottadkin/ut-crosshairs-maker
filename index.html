@@ -25,7 +25,7 @@
                 <input type="text" name="package-name" id="package-name" value="MyCrosshairpack">
             </div>
             <div class="form-row">
-                <label from="lock-width">Lock Width &amp; Height</label>
+                <label for="lock-width">Lock Width &amp; Height</label>
                 <input type="checkbox" id="lock-width" name="lock-width" checked>
             </div>
             <div class="form-row">
@@ -43,7 +43,7 @@
                 <input class="m-mode" type="number" name="height-max" id="height-max" value="5" min="0" max="32">
             </div>
             <div class="form-row">
-                <label from="lock-thickness">
+                <label for="lock-thickness">
                     Lock Thickness X &amp; Y
                 </label>
                 <input type="checkbox" name="lock-thickness" id="lock-thickness" checked>
@@ -84,7 +84,7 @@
                 <input class="m-mode" type="number" name="offset-y-max" id="offset-y-max" value="0" min="-32" max="32">
             </div>
             <div class="form-row">
-                <label for="image-type">
+                <label for="file-type">
                     Image Format
                 </label>
                 <select id="file-type" name="file-type">
@@ -107,6 +107,26 @@
         <h2>User.ini Data</h2>
         <textarea id="ini"></textarea>
 
+        <div id="tutorial">
+            <h3>How to import into Unreal Tournament</h3>
+
+           
+                <ol>
+                    <li>In order to use your created crosshair(s) you need to import them using UnrealED.exe which is located in you Unreal Tournament System folder, run the program to get started.</li>
+                    <li>With UnrealED open, click the texture browser icon/button highlighted in the red box.<img src="files/texturebrowser1.png" alt="image"></li>
+                   
+                    <li>Now click File, then Import.</li>
+                    <li>You can now select the files you created earlier, then click open. <br/><b>Important notes:</b> <i>If you are running Unreal Tournament v436 you will only be able to import .bmp images, 469 you can import both .bmp and .png, v451 has many issues with unrealEd if you can get it to run at all you can only import .bmp files.</i><img src="files/selectfiles.png" alt="image"></li>
+                    
+                    <li>With the Import Texture window open, give your package a name, group can be left empty, and don't change the name field.</li>
+                    <li>Now untick "Gen MipMaps", and tick "Masked".</li>
+                    <li>Now you can click the OK button to import one at a time, or OK all to do them all at once.<img src="files/import.png" alt="image"></li>
+                    <li>Next all you have to do is save the package by clicking the save icon or clicking File then save.<img src="files/savepackage.png" alt="image"></li>
+                    <li>You can now close UnrealED.</li>
+                
+                </ol>
+         
+        </div>
         <footer>
             Created by Scott Adkin 2021
         </footer>
