@@ -140,8 +140,15 @@ select, input[type=text]{
     margin-left:auto;
     margin-right:auto;
     border:1px solid rgb(100,100,100);
+    padding:2px;
     margin-top:14px;
     margin-bottom:14px;
+    max-width:90%;
+}
+
+#tutorial img:hover{
+    border:3px solid red;
+    padding:0px;
 }
 
 li{
