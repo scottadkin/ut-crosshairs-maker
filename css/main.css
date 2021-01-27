@@ -19,7 +19,6 @@ body{
     display:inline-block;
     background-color:white;
     border:1px solid rgba(0,0,0,0.25);
-    box-shadow:1px 1px 1px 1px rgba(0,0,0,0.5);
     margin-left:-1px;
     margin-top:-1px;
     width:150px;
@@ -35,7 +34,6 @@ canvas{
 
 
 .download a{
-    padding:5px;
     font-size:16px;
     color:rgb(120,120,120);
     text-decoration: none;
@@ -57,6 +55,12 @@ h2, h3{
     margin-top:25px;
     color:rgba(0,0,0,0.5);
     padding:10px;
+}
+
+#wrapper-info{
+    font-size:14px;
+    text-align:center;
+    padding-top:25px;
 }
 
 #wrapper{
