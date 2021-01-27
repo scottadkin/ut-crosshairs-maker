@@ -194,7 +194,6 @@ for(let i = 0; i < eventElems.length; i++){
     });
 }
 
-
 const hideMultiMode = () =>{
 
     const elems = document.getElementsByClassName("m-mode");
@@ -216,9 +215,6 @@ const showMultiMode = () =>{
         elems[i].style.cssText = "";
     }
 }
-
-
-
 
 
 for(let i = 0; i < _makerModes.length; i++){
@@ -269,11 +265,6 @@ _lockThickness.addEventListener("click", () =>{
     }
 });
 
-/*
-_fileType.addEventListener("change", () =>{
-
-    console.log(_fileType.value);
-});*/
 
 class Crosshair{
 
@@ -306,35 +297,14 @@ class Crosshair{
         
         if(_displayInfo.checked){
 
+            this.createInfoRow(this.info, "Width", this.width);
+            this.createInfoRow(this.info, "Height", this.height);
+            this.createInfoRow(this.info, "Thickness X", this.thickness.x);
+            this.createInfoRow(this.info, "Thickness Y", this.thickness.y);
+            this.createInfoRow(this.info, "Offset X", this.offset.x);
+            this.createInfoRow(this.info, "Offset Y", this.offset.y);
+            this.createInfoRow(this.info, "Center Gap", this.centerGap);
 
-            this.info.innerHTML = `
-            Width = ${this.width}<br/>
-            Height = ${this.height}<br/>
-            ThicknessX = ${this.thickness.x}<br/>
-            ThicknessY = ${this.thickness.y}<br/>
-            OffsetX = ${this.offset.x}<br/>
-            OffsetY = ${this.offset.y}<br/>
-            Center Gap = ${this.centerGap}<br/>
-        `;
-            /*let infoString = ``;
-
-            if(_lockWidthHeight.checked){
-                infoString += `Width &amp; Height=<b>${this.width}</b><br/>`;
-            }else{
-                infoString += `Width=<b>${this.width}</b> Height=<b>${this.height}</b><br/>`;
-            }
-
-            if(_lockThickness.checked){
-                infoString += `ThicknessX &amp; Y=<b>${this.thickness.x}</b><br/>`;
-            }else{
-                infoString += `Thickness X=<b>${this.thickness.x}</b> Thickness Y=<b>${this.thickness.y}</b><br/>`;
-            }
-            
-            infoString += `CenterGap=<b>${this.centerGap}</b><br/>`;
-
-            infoString += `OffsetX=<b>${this.offset.x}</b> OffsetY=<b>${this.offset.y}</b>`;
-
-            this.info.innerHTML = infoString;*/
         }
 
         this.wrapper.appendChild(this.info);
@@ -346,11 +316,10 @@ class Crosshair{
         this.url.herf = "#";
 
     
-        this.url.innerHTML = "Download";//`${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`
+        this.url.innerHTML = "Download";
         this.wrapper.appendChild(this.url);
         this.wrapper.appendChild(this.info);
-        //this.wrapper.innerHTML += `${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`;
-
+     
         _parent.appendChild(this.wrapper);
 
         this.url.addEventListener("click", () =>{
@@ -370,6 +339,22 @@ class Crosshair{
           
     }
 
+
+    createInfoRow(parent, label, value){
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "info-block";
+        const labelElem = document.createElement("div");
+        const valueElem = document.createElement("div");
+
+        labelElem.innerHTML = label;
+        valueElem.innerHTML = value;
+
+        wrapper.appendChild(labelElem);
+        wrapper.appendChild(valueElem);
+
+        parent.appendChild(wrapper);
+    }
 
 
     render(){
