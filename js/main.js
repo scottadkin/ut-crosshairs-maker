@@ -29,6 +29,9 @@ const _thicknessLabel = document.getElementById("thickness-label");
 const _fileType = document.getElementById("file-type");
 const _displayInfo = document.getElementById("display-info");
 
+const _rotation = document.getElementById("rotation");
+const _rotationMax = document.getElementById("rotation-max");
+
 
 let _crosshairs = [];
 
@@ -84,6 +87,9 @@ const createCrosshairs = () =>{
     const minOffsetY = parseInt(_offsetY.value);
     const maxOffsetY = parseInt(_offsetYMax.value);
 
+    const rotationMin = parseInt(_rotation.value);
+    const rotationMax = parseInt(_rotationMax.value);
+
     for(let width = minWidth; width <= maxWidth; width++){
    
         for(let height = minHeight; height <= maxHeight; height++){  
@@ -98,15 +104,18 @@ const createCrosshairs = () =>{
 
                             for(let offsetY = minOffsetY; offsetY <= maxOffsetY; offsetY++){
 
-                                new Crosshair(
-                                    width, 
-                                    (!_lockWidthHeight.checked) ? height: width, 
-                                    thicknessX, 
-                                    (!_lockThickness.checked) ? thicknessY: thicknessX,
-                                    centerGap, 
-                                    offsetX, 
-                                    offsetY
-                                );
+                                for(let rotation = rotationMin; rotation <= rotationMax; rotation++){
+                                    new Crosshair(
+                                        width, 
+                                        (!_lockWidthHeight.checked) ? height: width, 
+                                        thicknessX, 
+                                        (!_lockThickness.checked) ? thicknessY: thicknessX,
+                                        centerGap, 
+                                        offsetX, 
+                                        offsetY,
+                                        rotation
+                                    );
+                                }
                             }
                         }
                     }
@@ -137,7 +146,9 @@ const eventElems = [
     _lockWidthHeight,
     _lockThickness,
     _makerModes[0],
-    _makerModes[1]
+    _makerModes[1],
+    _rotation,
+    _rotationMax
 ];
 
 for(let i = 0; i < eventElems.length; i++){
@@ -162,6 +173,8 @@ for(let i = 0; i < eventElems.length; i++){
             updateMinMax(_offsetX, _offsetXMax);
         }if(eventElems[i].name === "offset-y" || eventElems[i].name === 'offset-y-max'){
             updateMinMax(_offsetY, _offsetYMax);
+        }if(eventElems[i].name === "rotation" || eventElems[i].name === "reotation-max"){
+            updateMinMax(_rotation, _rotationMax);
         }
 
         _parent.innerHTML = '';
@@ -175,7 +188,8 @@ for(let i = 0; i < eventElems.length; i++){
                 (!_lockThickness.checked) ? _thicknessY.value : _thicknessX.value, 
                 _centerGap.value, 
                 _offsetX.value, 
-                _offsetY.value
+                _offsetY.value,
+                _rotation.value
             );
 
             if(eventElems[i].name !== 'display-info'){
@@ -228,6 +242,7 @@ for(let i = 0; i < _makerModes.length; i++){
         _centerGapMax.value = _centerGap.value;
         _offsetXMax.value = _offsetX.value;
         _offsetYMax.value = _offsetY.value;
+        _rotationMax.value = _rotation.value;
 
         if(_makerModes[i].value === "single"){
             _currentMode = "single";
@@ -241,7 +256,7 @@ for(let i = 0; i < _makerModes.length; i++){
 
 _lockWidthHeight.addEventListener("click", () =>{
 
-    console.log(_lockWidthHeight.checked);
+    //console.log(_lockWidthHeight.checked);
 
     if(_lockWidthHeight.checked){
         _heightRow.style.cssText = "display:none";
@@ -254,7 +269,7 @@ _lockWidthHeight.addEventListener("click", () =>{
 
 _lockThickness.addEventListener("click", () =>{
 
-    console.log(_lockThickness.checked);
+    //console.log(_lockThickness.checked);
 
     if(_lockThickness.checked){
         _thicknessRow.style.cssText = "display:none";
@@ -268,7 +283,7 @@ _lockThickness.addEventListener("click", () =>{
 
 class Crosshair{
 
-    constructor(width, height, thicknessX, thicknessY, centerGap, offsetX, offsetY){
+    constructor(width, height, thicknessX, thicknessY, centerGap, offsetX, offsetY, rotation){
         
         this.packName = "xhairtests";
 
@@ -280,13 +295,15 @@ class Crosshair{
 
         this.offset = {"x": parseInt(offsetX), "y": parseInt(offsetY)};
 
+        this.rotation = parseInt(rotation);
+
         this.wrapper = document.createElement("div");
         this.wrapper.className = "download";
 
         
 
         this.canvas = document.createElement("canvas");
-        this.canvas.id = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`;
+        this.canvas.id = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}_${rotation}`;
         this.canvas.width = 64;
         this.canvas.height = 64;
 
@@ -304,6 +321,7 @@ class Crosshair{
             this.createInfoRow(this.info, "Offset X", this.offset.x);
             this.createInfoRow(this.info, "Offset Y", this.offset.y);
             this.createInfoRow(this.info, "Center Gap", this.centerGap);
+            this.createInfoRow(this.info, "Rotation", `${this.rotation}'deg`);
 
         }
 
@@ -324,7 +342,7 @@ class Crosshair{
 
         this.url.addEventListener("click", () =>{
 
-            const currentName = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}`;
+            const currentName = `x_${this.width}_${this.height}_${this.thickness.x}_${this.thickness.y}_${this.centerGap}_${this.offset.x}_${this.offset.y}_${this.rotation}`;
 
             if(_currentDownloaded.indexOf(currentName) === -1){
                 _currentDownloaded.push(currentName);
@@ -360,29 +378,37 @@ class Crosshair{
     render(){
 
         const c = this.canvas.getContext("2d");
+
+        const offsetX = this.offset.x;
+        const offsetY = this.offset.y;
+
         c.fillStyle = "black";
         c.fillRect(0,0,64,64);
 
         c.fillStyle = "white";
 
-        const offsetX = this.offset.x;
-        const offsetY = this.offset.y;
+        c.translate(32 +offsetX ,32 + offsetY);
+        c.rotate((Math.PI / 180 ) * this.rotation);
+
+        
+        const x = 0;
+        const y = 0;
         //x
-        c.fillRect(32 - this.width - this.centerGap + offsetX, 32 - Math.floor(this.thickness.x * 0.5) + offsetY, this.width, this.thickness.x);
+        c.fillRect(x - this.width - this.centerGap, y - Math.floor(this.thickness.x * 0.5), this.width, this.thickness.x);
         //c.fillStyle = "red";
-        c.fillRect(33 + this.centerGap + offsetX, 32 - Math.floor(this.thickness.x * 0.5) + offsetY, this.width, this.thickness.x);
+        c.fillRect(x + 1 + this.centerGap, y - Math.floor(this.thickness.x * 0.5), this.width, this.thickness.x);
 
         
         //y
         c.fillStyle = "white";
-        c.fillRect(32 - Math.floor(this.thickness.y * 0.5) + offsetX, 32 - this.height - this.centerGap + offsetY, this.thickness.y, this.height);
+        c.fillRect(x - Math.floor(this.thickness.y * 0.5), y - this.height - this.centerGap, this.thickness.y, this.height);
        // c.fillStyle = "red";
-        c.fillRect(32 - Math.floor(this.thickness.y * 0.5) + offsetX, 33 + this.centerGap + offsetY , this.thickness.y, this.height);
+        c.fillRect(x - Math.floor(this.thickness.y * 0.5), y + 1 + this.centerGap, this.thickness.y, this.height);
 
 
     }
 
 }
 
-new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value, _offsetX.value, _offsetY.value);
+new Crosshair(_width.value, _height.value, _thicknessX.value, _thicknessY.value, _centerGap.value, _offsetX.value, _offsetY.value, _rotation.value);
 
